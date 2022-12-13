@@ -6,9 +6,10 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from models.base_model import Base, BaseModel
 from models.user import User
 from models.todo import Todo
+from models.student import Student
 import models
 
-classes = {User: "User", Todo: "Todo"}
+classes = {User: "User", Todo: "Todo", Student: 'Student'}
 
 
 class DBStorage:
@@ -47,14 +48,6 @@ class DBStorage:
                 key = obj.__class__.__name__ + '.' + obj.id
                 new_dict[key] = obj
             return new_dict
-
-        # for clss in classes:
-        #     if cls is None or cls is classes[clss] or cls is clss:
-        #         objs = self.__session.query(classes[clss]).all()
-        #         for obj in objs:
-        #             key = obj.__class__.__name__ + '.' + obj.id
-        #             new_dict[key] = obj
-        # return (new_dict)
 
     def new(self, obj):
         """add the object to the current database session"""

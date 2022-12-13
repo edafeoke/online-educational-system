@@ -6,9 +6,28 @@ from models import storage
 from api.v1.views import api
 from flask import abort, jsonify, make_response, request
 
+from flask_jwt_extended import create_access_token, jwt_required
+
+
+@api.expect(api.model('auth', {
+        'username': fields.String,
+        'password': fields.String,
+    }))
+@api.route('/login', strict_slashes=False)
+class Auth(Resource):
+    '''auth resource'''
+    def post(self):
+        username = request.json.get("username", None)
+        password = request.json.get("password", None)
+        if username != "test" or password != "test":
+            return jsonify({"msg": "Bad username or password"}), 401
+
+        access_token = create_access_token(identity=username)
+        return jsonify(access_token=access_token)
 
 @api.route('/users', strict_slashes=False)
 class User(Resource):
+    # @jwt_required
     def get(self):
         """ returns list of all User objects """
         all_users = []
@@ -52,6 +71,12 @@ class User(Resource):
 
 @api.route('/users/<user_id>')
 class UserID(Resource):
+    @jwt_required()
+    # @api.expect(api.model('required', {
+    #     'access_token': fields.String,
+    #     'user_id':fields.String,
+    # }))
+
     def get(self, user_id):
         """ get a user by id """
         user = storage.get(Person, user_id)

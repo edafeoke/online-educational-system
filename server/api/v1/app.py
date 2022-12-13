@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 '''rest api entry module'''
 
-from flask import Flask
 from models import storage
 from api.v1.views import app_views, api
 from flask import Flask, render_template, make_response, jsonify
 from flask_cors import CORS
 from os import environ
 # from flask_restplus import Api
+from flask_jwt_extended import JWTManager
 
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+app.config["JWT_SECRET_KEY"] = "super-secret" 
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
-# api = Api(app)
+jwt = JWTManager(app)
 
 @app.teardown_appcontext
 def close_db(error):

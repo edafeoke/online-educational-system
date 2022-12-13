@@ -20,6 +20,7 @@ def get_stats():
         # "Place": "places",
         # "Review": "reviews",
         "Todo": "todos",
+        "Student": "students",
         "User": "users"}
     for cls in classes:
         count = storage.count(cls)

@@ -14,6 +14,7 @@ api = Api(app_views,
 from api.v1.views.index import *
 from api.v1.views.users import *
 from api.v1.views.todos import *
+from api.v1.views.students import *
 
 # from api.v1.views.places import *
 # from api.v1.views.places_reviews import *

@@ -8,6 +8,7 @@ from models.base_model import BaseModel
 # import all models here
 from models.user import User
 from models.todo import Todo
+from models.student import Student
 
 
 class Console(cmd.Cmd):
